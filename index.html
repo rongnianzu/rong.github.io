@@ -11,15 +11,22 @@
 <script src='https://cdn.bootcss.com/echarts/3.7.1/echarts.common.min.js' type='text/javascript'></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.showLoading();
     $.get('map/ne_110m_admin_0_countries.json', function (worldJson) {
+        myChart.hideLoading();
         echarts.registerMap('world', worldJson);
-        var chart = echarts.init(document.getElementById('main'));
-        chart.setOption({
-            series: [{
-                type: 'map',
-                map: 'world'
-            }]
-        });
+        var option = {
+            geo: {
+                map: 'world',
+                roam: true,     //是否可以拖动缩放
+                center: [115.97, 29.71],    //中心点
+                zoom: 1.5     //默认缩放比例
+            },
+            backgroundColor: '#cddee7'
+        };
+        myChart.setOption(option)
     });
+
 </script>
 </html>
